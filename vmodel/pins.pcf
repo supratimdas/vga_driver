@@ -1,0 +1,7 @@
+set_io clk  21
+
+set_io o_v_sync 78  
+set_io o_h_sync 79 
+set_io o_r 87 
+set_io o_b 88 
+set_io o_g 90 
