@@ -3,7 +3,7 @@
 * Description   : vga display driver on ice40
 * Organization  : NONE 
 * Creation Date : 07-03-2020
-* Last Modified : Friday 24 December 2021 07:30:45 PM
+* Last Modified : Saturday 15 January 2022 11:33:47 PM
 * Author        : Supratim Das (supratimofficio@gmail.com)
 ************************************************************/ 
 `timescale 1ns/1ps
@@ -29,7 +29,7 @@ module ice40_vga_driver (
 
     pll u_pll(
 	    .clock_in(clk),
-	    .clock_out(clk_60Mhz),
+	    .clock_out(clk_50Mhz),
 	    .locked(pll_locked));
 
     //reset generation
@@ -44,13 +44,18 @@ module ice40_vga_driver (
 
 
     vga_driver u_vga_core (
-        .clk_60Mhz(clk_60Mhz),  //<i 
+        .clk_50Mhz(clk_50Mhz),  //<i 
         .reset_(reset_),        //<i
         .o_v_sync(o_v_sync),    //>o
         .o_h_sync(o_h_sync),    //>o
         .o_r(o_r),              //>o
         .o_g(o_g),              //>o
-        .o_b(o_b)               //>o
+        .o_b(o_b),              //>o
+        .o_fetch_next_pixel(),  //>o
+        .i_pixel_r(),           //<i
+        .i_pixel_g(),           //<i
+        .i_pixel_b(),           //<i
+        .i_self_test(1'b1)      //<i
     );
 
 endmodule
