@@ -3,14 +3,16 @@
 * Description   : vga display driver tb
 * Organization  : NONE 
 * Creation Date : 07-03-2020
-* Last Modified : Friday 24 December 2021 06:47:59 PM
+* Last Modified : Sunday 16 January 2022 03:04:54 PM
 * Author        : Supratim Das (supratimofficio@gmail.com)
 ************************************************************/ 
 `timescale 1ns/1ps
 
+`define SIM
 `define SIMULATION_END_COUNT 5000000
 
-`include "../vmodel/vga_driver.v" //dut
+`include "../vmodel/vga_driver.v" 
+`include "../vmodel/ice40_vga_driver.v" 
 
 module tb ();
     reg clk;
@@ -46,15 +48,15 @@ module tb ();
 
     //dut instance
 
-    vga_driver u_dut(
-        .clk_60Mhz(clk),   //<i 
-        .reset_(reset_),   //<i
-        .o_v_sync(),       //>o
-        .o_h_sync(),       //>o
-        .o_r(),            //>o
-        .o_g(),            //>o
-        .o_b()             //>o
+    ice40_vga_driver u_vga_driver(
+       .clk(clk),         //<i 
+       .o_v_sync(),       //>o
+       .o_h_sync(),       //>o
+       .o_r(),            //>o
+       .o_g(),            //>o
+       .o_b()             //>o
     );
+
 
 
 endmodule

@@ -3,7 +3,7 @@
 * Description   : vga display driver supporting 8 color mode
 * Organization  : NONE 
 * Creation Date : 07-03-2020
-* Last Modified : Saturday 15 January 2022 11:32:28 PM
+* Last Modified : Sunday 16 January 2022 03:12:49 PM
 * Author        : Supratim Das (supratimofficio@gmail.com)
 ************************************************************/ 
 `timescale 1ns/1ps
@@ -43,10 +43,6 @@ module vga_driver (
 
     wire v_sync; 
     wire h_sync; 
-
-    reg v_sync_q;
-    reg v_sync_qq;
-    reg h_sync_q;
 
     reg r_q;
     reg g_q;
@@ -141,9 +137,13 @@ module vga_driver (
 
     assign pixel_en = ~horizontal_back_porch & ~horizontal_front_porch & ~vertical_back_porch & ~vertical_front_porch & h_sync & v_sync_q; 
 
-    reg [31:0] count;
 
     assign o_fetch_next_pixel = pixel_en;
+
+    reg fetch_next_pixel_q, r, g, b;
+    wire pixel_r, pixel_g, pixel_b;
+    wire final_r, final_g, final_b;
+
     always @(posedge clk_50Mhz) begin
         fetch_next_pixel_q <= o_fetch_next_pixel;
         if(fetch_next_pixel_q) begin
@@ -162,6 +162,8 @@ module vga_driver (
     assign final_g = fetch_next_pixel_q & pixel_g;
     assign final_b = fetch_next_pixel_q & pixel_b;
 
+    reg final_r_q, final_g_q, final_b_q;
+
     always @(posedge clk_50Mhz) begin
         final_r_q <= final_r;
         final_g_q <= final_g;
@@ -175,6 +177,7 @@ module vga_driver (
     assign h_sync = (h_sync_tick_counter < `h_sync_lo_period_ticks) ? 1'b0 : 1'b1;
     assign v_sync = (v_sync_tick_counter < `v_sync_lo_period_ticks) ? 1'b0 : 1'b1;
 
+    reg h_sync_q, v_sync_q, h_sync_qq, v_sync_qq;
     always @(posedge clk_50Mhz) begin
         h_sync_q  <= h_sync;
         v_sync_q  <= v_sync;
