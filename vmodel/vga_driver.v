@@ -3,7 +3,7 @@
 * Description   : vga display driver supporting 8 color mode
 * Organization  : NONE 
 * Creation Date : 07-03-2020
-* Last Modified : Sunday 16 January 2022 03:12:49 PM
+* Last Modified : Monday 24 January 2022 03:37:20 PM
 * Author        : Supratim Das (supratimofficio@gmail.com)
 ************************************************************/ 
 `timescale 1ns/1ps

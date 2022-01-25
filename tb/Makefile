@@ -14,8 +14,11 @@ compile:
 run: compile
 	./vsim.out	
 
-waves:
-	gtkwave test.vcd
+test.fst:
+	vcd2fst -v test.vcd -f test.fst
+
+waves: test.fst
+	gtkwave test.fst
 
 clean:
-	rm -f  *.out *.vcd *.txt
+	rm -f  *.out *.vcd *.txt *.fst

@@ -3,13 +3,13 @@
 * Description   : vga display driver tb
 * Organization  : NONE 
 * Creation Date : 07-03-2020
-* Last Modified : Sunday 16 January 2022 03:04:54 PM
+* Last Modified : Sunday 23 January 2022 03:37:16 PM
 * Author        : Supratim Das (supratimofficio@gmail.com)
 ************************************************************/ 
 `timescale 1ns/1ps
 
 `define SIM
-`define SIMULATION_END_COUNT 5000000
+`define SIMULATION_END_COUNT 2000000
 
 `include "../vmodel/vga_driver.v" 
 `include "../vmodel/ice40_vga_driver.v" 

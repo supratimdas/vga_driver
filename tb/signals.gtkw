@@ -1,0 +1,31 @@
+[*]
+[*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
+[*] Sun Jan 23 09:57:38 2022
+[*]
+[dumpfile] "/home/supratim/vga_driver/tb/test.vcd"
+[dumpfile_mtime] "Sun Jan 23 09:57:05 2022"
+[dumpfile_size] 52873167
+[savefile] "/home/supratim/vga_driver/tb/signals.gtkw"
+[timestart] 35784332800
+[size] 1855 1056
+[pos] -1 -1
+*-16.878830 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] tb.
+[treeopen] tb.u_vga_driver.
+[sst_width] 223
+[signals_width] 190
+[sst_expanded] 1
+[sst_vpaned_height] 321
+@28
+tb.u_vga_driver.u_img_rom.clk
+tb.u_vga_driver.o_v_sync
+tb.u_vga_driver.o_h_sync
+tb.u_vga_driver.u_img_rom.i_fetch_next_pixel
+@25
+tb.u_vga_driver.u_img_rom.line[8:0]
+@24
+tb.u_vga_driver.u_img_rom.pixels_per_line[9:0]
+@28
+tb.u_vga_driver.u_img_rom.o_pixel_rgb[2:0]
+[pattern_trace] 1
+[pattern_trace] 0

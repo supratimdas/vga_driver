@@ -1,0 +1,12 @@
+To create the image rom, use the following python code:
+gen_image_matrix.py
+
+> gen_image_matrix.py > img.v
+
+sample image hardcoded in the python script:
+NoobsCPU.png
+
+
+do:
+make clean
+make prog

@@ -3,13 +3,13 @@
 * Description   : vga display driver on ice40
 * Organization  : NONE 
 * Creation Date : 07-03-2020
-* Last Modified : Sunday 16 January 2022 03:25:11 PM
+* Last Modified : Monday 24 January 2022 04:16:28 PM
 * Author        : Supratim Das (supratimofficio@gmail.com)
 ************************************************************/ 
 `timescale 1ns/1ps
 
-`define MAX_H_PIXELS 640
-`define MAX_V_LINES 480
+`define MAX_H_PIXELS 10'd640
+`define MAX_V_LINES 9'd480
 
 module img_rom(
     clk,                //<i
@@ -26,6 +26,9 @@ module img_rom(
     reg [9:0] pixels_per_line;
     reg [2:0] pixel_rgb;
 
+    assign row_done = (pixels_per_line >= `MAX_H_PIXELS);
+    assign frame_done = (line >= `MAX_V_LINES);
+
     always @(posedge clk) begin
         if(!reset_) begin
             line <= 8'd0;
@@ -33,10 +36,11 @@ module img_rom(
         end
         else if(i_fetch_next_pixel) begin
             pixels_per_line <= pixels_per_line + 1'b1;
-            if(pixels_per_line >= `MAX_H_PIXELS) begin
-               line <= line + 1; 
+            if(row_done) begin
+                pixels_per_line <= 10'd0;
+                line <= line + 1; 
             end
-            if(line >= `MAX_V_LINES) begin
+            if(frame_done) begin
                 line <= 7'd0;
                 pixels_per_line <= 10'd0;
             end
@@ -45,211 +49,8 @@ module img_rom(
 
     always @(*) begin
         case({line,pixels_per_line})
-            {9'd90, 10'd10} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd11} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd12} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd13} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd14} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd15} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd16} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd17} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd18} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd19} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd20} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd21} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd22} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd23} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd24} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd25} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd26} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd27} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd28} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd29} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd30} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd31} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd32} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd33} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd34} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd35} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd36} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd37} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd38} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd39} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd40} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd41} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd42} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd43} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd44} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd45} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd46} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd47} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd48} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd49} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd50} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd51} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd52} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd53} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd54} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd55} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd56} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd57} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd58} : pixel_rgb = 3'b111; 
-            {9'd90, 10'd59} : pixel_rgb = 3'b111; 
-
-            {9'd91, 10'd10} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd11} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd12} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd13} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd14} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd15} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd16} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd17} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd18} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd19} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd20} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd21} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd22} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd23} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd24} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd25} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd26} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd27} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd28} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd29} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd30} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd31} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd32} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd33} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd34} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd35} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd36} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd37} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd38} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd39} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd40} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd41} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd42} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd43} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd44} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd45} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd46} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd47} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd48} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd49} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd50} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd51} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd52} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd53} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd54} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd55} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd56} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd57} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd58} : pixel_rgb = 3'b111; 
-            {9'd91, 10'd59} : pixel_rgb = 3'b111; 
-
-            {9'd92, 10'd10} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd11} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd12} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd13} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd14} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd15} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd16} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd17} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd18} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd19} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd20} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd21} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd22} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd23} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd24} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd25} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd26} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd27} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd28} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd29} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd30} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd31} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd32} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd33} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd34} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd35} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd36} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd37} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd38} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd39} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd40} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd41} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd42} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd43} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd44} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd45} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd46} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd47} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd48} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd49} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd50} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd51} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd52} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd53} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd54} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd55} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd56} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd57} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd58} : pixel_rgb = 3'b111; 
-            {9'd92, 10'd59} : pixel_rgb = 3'b111; 
-
-            {9'd93, 10'd10} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd11} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd12} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd13} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd14} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd15} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd16} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd17} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd18} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd19} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd20} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd21} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd22} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd23} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd24} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd25} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd26} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd27} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd28} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd29} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd30} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd31} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd32} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd33} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd34} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd35} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd36} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd37} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd38} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd39} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd40} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd41} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd42} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd43} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd44} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd45} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd46} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd47} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd48} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd49} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd50} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd51} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd52} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd53} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd54} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd55} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd56} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd57} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd58} : pixel_rgb = 3'b111; 
-            {9'd93, 10'd59} : pixel_rgb = 3'b111; 
-
-            default: pixel_rgb = 3'd5;
+            `include "img.v"
+            default: pixel_rgb = 3'b111;
         endcase
     end
 
