@@ -2,7 +2,7 @@
 # File Name     : gen_image_matrix.py
 # Organization  : NONE
 # Creation Date : 24-01-2022
-# Last Modified : Tuesday 25 January 2022 07:13:04 PM
+# Last Modified : Tuesday 25 January 2022 07:48:42 PM
 # Author        : Supratim Das (supratimofficio@gmail.com)
 # ##########################################################
 
@@ -26,9 +26,9 @@ for y in range(0,lines):
         r = im[y][x][0]
         g = im[y][x][1]
         b = im[y][x][2]
-        r = 1 if r > 140 else 0
-        g = 1 if g > 140 else 0
-        b = 1 if b > 140 else 0
+        r = 1 if r > 240 else 0
+        g = 1 if g > 240 else 0
+        b = 1 if b > 240 else 0
 
         X = x + x_shift
         Y = y + y_shift

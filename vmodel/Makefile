@@ -13,7 +13,7 @@ YOSYS_LOG  = synth.log
 
 YOSYS_ARGS = -v3 -l $(YOSYS_LOG) 
 
-VERILOG_SRCS = ice40_vga_driver.v vga_driver.v pll.v 
+VERILOG_SRCS = fb_mem.v frame_buffer.v ice40_vga_driver.v vga_driver.v pll.v 
 
 BIN_FILE  = $(TARGET_STEM).bin
 ASC_FILE  = $(TARGET_STEM).asc

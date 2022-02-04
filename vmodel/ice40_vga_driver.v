@@ -3,59 +3,10 @@
 * Description   : vga display driver on ice40
 * Organization  : NONE 
 * Creation Date : 07-03-2020
-* Last Modified : Monday 24 January 2022 04:16:28 PM
+* Last Modified : Friday 04 February 2022 09:25:40 PM
 * Author        : Supratim Das (supratimofficio@gmail.com)
 ************************************************************/ 
 `timescale 1ns/1ps
-
-`define MAX_H_PIXELS 10'd640
-`define MAX_V_LINES 9'd480
-
-module img_rom(
-    clk,                //<i
-    reset_,             //<i
-    i_fetch_next_pixel, //<i
-    o_pixel_rgb         //>o
-);
-    input           clk;
-    input           reset_;
-    input           i_fetch_next_pixel;
-    output [2:0]    o_pixel_rgb;
-
-    reg [8:0] line;
-    reg [9:0] pixels_per_line;
-    reg [2:0] pixel_rgb;
-
-    assign row_done = (pixels_per_line >= `MAX_H_PIXELS);
-    assign frame_done = (line >= `MAX_V_LINES);
-
-    always @(posedge clk) begin
-        if(!reset_) begin
-            line <= 8'd0;
-            pixels_per_line <= 10'd0;
-        end
-        else if(i_fetch_next_pixel) begin
-            pixels_per_line <= pixels_per_line + 1'b1;
-            if(row_done) begin
-                pixels_per_line <= 10'd0;
-                line <= line + 1; 
-            end
-            if(frame_done) begin
-                line <= 7'd0;
-                pixels_per_line <= 10'd0;
-            end
-        end
-    end
-
-    always @(*) begin
-        case({line,pixels_per_line})
-            `include "img.v"
-            default: pixel_rgb = 3'b111;
-        endcase
-    end
-
-    assign o_pixel_rgb = pixel_rgb;
-endmodule
 
 module ice40_vga_driver (
     clk,            //<i 
@@ -116,10 +67,13 @@ module ice40_vga_driver (
     wire r,g,b;
     wire fetch_next_pixel;
 
-    img_rom u_img_rom (
+    frame_buffer u_frame_buffer (
         .clk(clk_25Mhz),                        //<i
         .reset_(o_v_sync),                      //<i
         .i_fetch_next_pixel(fetch_next_pixel),  //<i
+        .i_fb_update(1.b0),                     //<i
+        .i_fb_addr(),                           //<i
+        .i_fb_data(),                           //<i
         .o_pixel_rgb({r,g,b})                   //>o
     );
 
