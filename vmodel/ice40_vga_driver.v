@@ -3,7 +3,7 @@
 * Description   : vga display driver on ice40
 * Organization  : NONE 
 * Creation Date : 07-03-2020
-* Last Modified : Friday 04 February 2022 09:25:40 PM
+* Last Modified : Friday 04 February 2022 09:33:00 PM
 * Author        : Supratim Das (supratimofficio@gmail.com)
 ************************************************************/ 
 `timescale 1ns/1ps
@@ -71,7 +71,7 @@ module ice40_vga_driver (
         .clk(clk_25Mhz),                        //<i
         .reset_(o_v_sync),                      //<i
         .i_fetch_next_pixel(fetch_next_pixel),  //<i
-        .i_fb_update(1.b0),                     //<i
+        .i_fb_update(1'b0),                     //<i
         .i_fb_addr(),                           //<i
         .i_fb_data(),                           //<i
         .o_pixel_rgb({r,g,b})                   //>o
